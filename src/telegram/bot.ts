@@ -25,6 +25,8 @@ import { getChildLogger } from "../logging.js";
 import { createSubsystemLogger } from "../logging/subsystem.js";
 import { createNonExitingRuntime, type RuntimeEnv } from "../runtime.js";
 import { resolveTelegramAccount } from "./accounts.js";
+import { normalizeTelegramApiBaseUrl } from "./api-base.js";
+import { withTelegramApiErrorLogging } from "./api-logging.js";
 import { registerTelegramHandlers } from "./bot-handlers.js";
 import { createTelegramMessageProcessor } from "./bot-message.js";
 import { registerTelegramNativeCommands } from "./bot-native-commands.js";
@@ -132,11 +134,13 @@ export function createTelegramBot(opts: TelegramBotOptions) {
     typeof telegramCfg?.timeoutSeconds === "number" && Number.isFinite(telegramCfg.timeoutSeconds)
       ? Math.max(1, Math.floor(telegramCfg.timeoutSeconds))
       : undefined;
+  const apiRoot = normalizeTelegramApiBaseUrl(telegramCfg.apiBaseUrl);
   const client: ApiClientOptions | undefined =
-    shouldProvideFetch || timeoutSeconds
+    shouldProvideFetch || timeoutSeconds || apiRoot
       ? {
           ...(shouldProvideFetch && fetchImpl ? { fetch: fetchForClient } : {}),
           ...(timeoutSeconds ? { timeoutSeconds } : {}),
+          ...(apiRoot ? { apiRoot } : {}),
         }
       : undefined;
 

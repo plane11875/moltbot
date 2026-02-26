@@ -6,6 +6,7 @@ import {
   resolveDefaultTelegramAccountId,
   resolveTelegramAccount,
 } from "../../../telegram/accounts.js";
+import { buildTelegramBotApiBase } from "../../../telegram/api-base.js";
 import { formatDocsLink } from "../../../terminal/links.js";
 import type { WizardPrompter } from "../../../wizard/prompts.js";
 import { fetchTelegramChatId } from "../../telegram/api.js";
@@ -77,32 +78,63 @@ async function promptTelegramAllowFrom(params: {
   if (!token) {
     await prompter.note("Telegram token missing; username lookup is unavailable.", "Telegram");
   }
-  const unique = await promptResolvedAllowFrom({
-    prompter,
-    existing: existingAllowFrom,
-    token,
-    message: "Telegram allowFrom (numeric sender id; @username resolves to id)",
-    placeholder: "@username",
-    label: "Telegram allowlist",
-    parseInputs: splitOnboardingEntries,
-    parseId: parseTelegramAllowFromId,
-    invalidWithoutTokenNote:
-      "Telegram token missing; use numeric sender ids (usernames require a bot token).",
-    resolveEntries: async ({ token: tokenValue, entries }) => {
-      const results = await Promise.all(
-        entries.map(async (entry) => {
-          const numericId = parseTelegramAllowFromId(entry);
-          if (numericId) {
-            return { input: entry, resolved: true, id: numericId };
-          }
-          const stripped = normalizeTelegramAllowFromInput(entry);
-          if (!stripped) {
-            return { input: entry, resolved: false, id: null };
-          }
-          const username = stripped.startsWith("@") ? stripped : `@${stripped}`;
-          const id = await fetchTelegramChatId({ token: tokenValue, chatId: username });
-          return { input: entry, resolved: Boolean(id), id };
-        }),
+
+  const resolveTelegramUserId = async (raw: string): Promise<string | null> => {
+    const trimmed = raw.trim();
+    if (!trimmed) {
+      return null;
+    }
+    const stripped = trimmed.replace(/^(telegram|tg):/i, "").trim();
+    if (/^\d+$/.test(stripped)) {
+      return stripped;
+    }
+    if (!token) {
+      return null;
+    }
+    const username = stripped.startsWith("@") ? stripped : `@${stripped}`;
+    const base = buildTelegramBotApiBase(token, resolved.config.apiBaseUrl);
+    const url = `${base}/getChat?chat_id=${encodeURIComponent(username)}`;
+    try {
+      const res = await fetch(url);
+      if (!res.ok) {
+        return null;
+      }
+      const data = (await res.json().catch(() => null)) as {
+        ok?: boolean;
+        result?: { id?: number | string };
+      } | null;
+      const id = data?.ok ? data?.result?.id : undefined;
+      if (typeof id === "number" || typeof id === "string") {
+        return String(id);
+      }
+      return null;
+    } catch {
+      // Network error during username lookup - return null to prompt user for numeric ID
+      return null;
+    }
+  };
+
+  const parseInput = (value: string) =>
+    value
+      .split(/[\n,;]+/g)
+      .map((entry) => entry.trim())
+      .filter(Boolean);
+
+  let resolvedIds: string[] = [];
+  while (resolvedIds.length === 0) {
+    const entry = await prompter.text({
+      message: "Telegram allowFrom (username or user id)",
+      placeholder: "@username",
+      initialValue: existingAllowFrom[0] ? String(existingAllowFrom[0]) : undefined,
+      validate: (value) => (String(value ?? "").trim() ? undefined : "Required"),
+    });
+    const parts = parseInput(String(entry));
+    const results = await Promise.all(parts.map((part) => resolveTelegramUserId(part)));
+    const unresolved = parts.filter((_, idx) => !results[idx]);
+    if (unresolved.length > 0) {
+      await prompter.note(
+        `Could not resolve: ${unresolved.join(", ")}. Use @username or numeric id.`,
+        "Telegram allowlist",
       );
       return results;
     },

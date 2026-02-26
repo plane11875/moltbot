@@ -12,6 +12,7 @@ import { isGifMedia } from "../../media/mime.js";
 import { saveMediaBuffer } from "../../media/store.js";
 import type { RuntimeEnv } from "../../runtime.js";
 import { loadWebMedia } from "../../web/media.js";
+import { buildTelegramFileUrl } from "../api-base.js";
 import { withTelegramApiErrorLogging } from "../api-logging.js";
 import type { TelegramInlineButtons } from "../button-types.js";
 import { splitTelegramCaption } from "../caption.js";
@@ -313,6 +314,7 @@ export async function resolveMedia(
   maxBytes: number,
   token: string,
   proxyFetch?: typeof fetch,
+  apiBaseUrl?: string,
 ): Promise<{
   path: string;
   contentType?: string;
@@ -356,7 +358,24 @@ export async function resolveMedia(
         logVerbose("telegram: fetch not available for sticker download");
         return null;
       }
-      const saved = await downloadAndSaveTelegramFile(file.file_path, fetchImpl);
+      const url = buildTelegramFileUrl({
+        token,
+        filePath: file.file_path,
+        apiBaseUrl,
+      });
+      const fetched = await fetchRemoteMedia({
+        url,
+        fetchImpl,
+        filePathHint: file.file_path,
+      });
+      const originalName = fetched.fileName ?? file.file_path;
+      const saved = await saveMediaBuffer(
+        fetched.buffer,
+        fetched.contentType,
+        "inbound",
+        maxBytes,
+        originalName,
+      );
 
       // Check sticker cache for existing description
       const cached = sticker.file_unique_id ? getCachedSticker(sticker.file_unique_id) : null;
@@ -451,8 +470,34 @@ export async function resolveMedia(
   if (!fetchImpl) {
     throw new Error("fetch is not available; set channels.telegram.proxy in config");
   }
-  const saved = await downloadAndSaveTelegramFile(file.file_path, fetchImpl);
-  const placeholder = resolveTelegramMediaPlaceholder(msg) ?? "<media:document>";
+  const url = buildTelegramFileUrl({
+    token,
+    filePath: file.file_path,
+    apiBaseUrl,
+  });
+  const fetched = await fetchRemoteMedia({
+    url,
+    fetchImpl,
+    filePathHint: file.file_path,
+  });
+  const originalName = fetched.fileName ?? file.file_path;
+  const saved = await saveMediaBuffer(
+    fetched.buffer,
+    fetched.contentType,
+    "inbound",
+    maxBytes,
+    originalName,
+  );
+  let placeholder = "<media:document>";
+  if (msg.photo) {
+    placeholder = "<media:image>";
+  } else if (msg.video) {
+    placeholder = "<media:video>";
+  } else if (msg.video_note) {
+    placeholder = "<media:video>";
+  } else if (msg.audio || msg.voice) {
+    placeholder = "<media:audio>";
+  }
   return { path: saved.path, contentType: saved.contentType, placeholder };
 }
 

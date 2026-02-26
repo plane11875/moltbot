@@ -20,6 +20,7 @@ import { isGifMedia } from "../media/mime.js";
 import { normalizePollInput, type PollInput } from "../polls.js";
 import { loadWebMedia } from "../web/media.js";
 import { type ResolvedTelegramAccount, resolveTelegramAccount } from "./accounts.js";
+import { normalizeTelegramApiBaseUrl } from "./api-base.js";
 import { withTelegramApiErrorLogging } from "./api-logging.js";
 import { buildTelegramThreadParams } from "./bot/helpers.js";
 import type { TelegramInlineButtons } from "./button-types.js";
@@ -131,10 +132,12 @@ function resolveTelegramClientOptions(
     Number.isFinite(account.config.timeoutSeconds)
       ? Math.max(1, Math.floor(account.config.timeoutSeconds))
       : undefined;
-  return fetchImpl || timeoutSeconds
+  const apiRoot = normalizeTelegramApiBaseUrl(account.config.apiBaseUrl);
+  return fetchImpl || timeoutSeconds || apiRoot
     ? {
         ...(fetchImpl ? { fetch: fetchImpl as unknown as ApiClientOptions["fetch"] } : {}),
         ...(timeoutSeconds ? { timeoutSeconds } : {}),
+        ...(apiRoot ? { apiRoot } : {}),
       }
     : undefined;
 }
