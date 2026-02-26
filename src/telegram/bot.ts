@@ -30,6 +30,7 @@ import { createSubsystemLogger } from "../logging/subsystem.js";
 import { resolveAgentRoute } from "../routing/resolve-route.js";
 import { resolveThreadSessionKeys } from "../routing/session-key.js";
 import { resolveTelegramAccount } from "./accounts.js";
+import { normalizeTelegramApiBaseUrl } from "./api-base.js";
 import { withTelegramApiErrorLogging } from "./api-logging.js";
 import { registerTelegramHandlers } from "./bot-handlers.js";
 import { createTelegramMessageProcessor } from "./bot-message.js";
@@ -132,13 +133,15 @@ export function createTelegramBot(opts: TelegramBotOptions) {
     typeof telegramCfg?.timeoutSeconds === "number" && Number.isFinite(telegramCfg.timeoutSeconds)
       ? Math.max(1, Math.floor(telegramCfg.timeoutSeconds))
       : undefined;
+  const apiRoot = normalizeTelegramApiBaseUrl(telegramCfg.apiBaseUrl);
   const client: ApiClientOptions | undefined =
-    shouldProvideFetch || timeoutSeconds
+    shouldProvideFetch || timeoutSeconds || apiRoot
       ? {
           ...(shouldProvideFetch && fetchImpl
             ? { fetch: fetchImpl as unknown as ApiClientOptions["fetch"] }
             : {}),
           ...(timeoutSeconds ? { timeoutSeconds } : {}),
+          ...(apiRoot ? { apiRoot } : {}),
         }
       : undefined;
 

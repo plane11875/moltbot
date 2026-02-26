@@ -12,6 +12,7 @@ import { fetchRemoteMedia } from "../../media/fetch.js";
 import { isGifMedia } from "../../media/mime.js";
 import { saveMediaBuffer } from "../../media/store.js";
 import { loadWebMedia } from "../../web/media.js";
+import { buildTelegramFileUrl } from "../api-base.js";
 import { withTelegramApiErrorLogging } from "../api-logging.js";
 import { splitTelegramCaption } from "../caption.js";
 import {
@@ -296,6 +297,7 @@ export async function resolveMedia(
   maxBytes: number,
   token: string,
   proxyFetch?: typeof fetch,
+  apiBaseUrl?: string,
 ): Promise<{
   path: string;
   contentType?: string;
@@ -327,7 +329,11 @@ export async function resolveMedia(
         logVerbose("telegram: fetch not available for sticker download");
         return null;
       }
-      const url = `https://api.telegram.org/file/bot${token}/${file.file_path}`;
+      const url = buildTelegramFileUrl({
+        token,
+        filePath: file.file_path,
+        apiBaseUrl,
+      });
       const fetched = await fetchRemoteMedia({
         url,
         fetchImpl,
@@ -408,7 +414,11 @@ export async function resolveMedia(
   if (!fetchImpl) {
     throw new Error("fetch is not available; set channels.telegram.proxy in config");
   }
-  const url = `https://api.telegram.org/file/bot${token}/${file.file_path}`;
+  const url = buildTelegramFileUrl({
+    token,
+    filePath: file.file_path,
+    apiBaseUrl,
+  });
   const fetched = await fetchRemoteMedia({
     url,
     fetchImpl,

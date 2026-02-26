@@ -9,6 +9,7 @@ import {
   resolveDefaultTelegramAccountId,
   resolveTelegramAccount,
 } from "../../../telegram/accounts.js";
+import { buildTelegramBotApiBase } from "../../../telegram/api-base.js";
 import { formatDocsLink } from "../../../terminal/links.js";
 import { addWildcardAllowFrom, promptAccountId } from "./helpers.js";
 
@@ -85,7 +86,8 @@ async function promptTelegramAllowFrom(params: {
       return null;
     }
     const username = stripped.startsWith("@") ? stripped : `@${stripped}`;
-    const url = `https://api.telegram.org/bot${token}/getChat?chat_id=${encodeURIComponent(username)}`;
+    const base = buildTelegramBotApiBase(token, resolved.config.apiBaseUrl);
+    const url = `${base}/getChat?chat_id=${encodeURIComponent(username)}`;
     try {
       const res = await fetch(url);
       if (!res.ok) {
