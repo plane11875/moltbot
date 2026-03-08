@@ -1,9 +1,13 @@
+import { buildTelegramBotApiBase } from "../../telegram/api-base.js";
+
 export async function fetchTelegramChatId(params: {
   token: string;
   chatId: string;
   signal?: AbortSignal;
+  apiBaseUrl?: string;
 }): Promise<string | null> {
-  const url = `https://api.telegram.org/bot${params.token}/getChat?chat_id=${encodeURIComponent(params.chatId)}`;
+  const base = buildTelegramBotApiBase(params.token, params.apiBaseUrl);
+  const url = `${base}/getChat?chat_id=${encodeURIComponent(params.chatId)}`;
   try {
     const res = await fetch(url, params.signal ? { signal: params.signal } : undefined);
     if (!res.ok) {

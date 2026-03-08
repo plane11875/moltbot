@@ -323,7 +323,7 @@ export async function resolveMedia(
 } | null> {
   const msg = ctx.message;
   const downloadAndSaveTelegramFile = async (filePath: string, fetchImpl: typeof fetch) => {
-    const url = `https://api.telegram.org/file/bot${token}/${filePath}`;
+    const url = buildTelegramFileUrl({ token, filePath, apiBaseUrl });
     const fetched = await fetchRemoteMedia({
       url,
       fetchImpl,
