@@ -12,7 +12,7 @@ import { isGifMedia } from "../../media/mime.js";
 import { saveMediaBuffer } from "../../media/store.js";
 import type { RuntimeEnv } from "../../runtime.js";
 import { loadWebMedia } from "../../web/media.js";
-import { buildTelegramFileUrl } from "../api-base.js";
+import { buildTelegramFileUrl, resolveTelegramApiBaseUrl } from "../api-base.js";
 import { withTelegramApiErrorLogging } from "../api-logging.js";
 import type { TelegramInlineButtons } from "../button-types.js";
 import { splitTelegramCaption } from "../caption.js";
@@ -43,6 +43,22 @@ const TELEGRAM_MEDIA_SSRF_POLICY = {
   allowedHostnames: ["api.telegram.org"],
   allowRfc2544BenchmarkRange: true,
 };
+
+function resolveTelegramMediaSsrfPolicy(apiBaseUrl?: string) {
+  const base = resolveTelegramApiBaseUrl(apiBaseUrl);
+  try {
+    const host = new URL(base).hostname;
+    if (!host || host === "api.telegram.org") {
+      return TELEGRAM_MEDIA_SSRF_POLICY;
+    }
+    return {
+      ...TELEGRAM_MEDIA_SSRF_POLICY,
+      allowedHostnames: [...TELEGRAM_MEDIA_SSRF_POLICY.allowedHostnames, host],
+    };
+  } catch {
+    return TELEGRAM_MEDIA_SSRF_POLICY;
+  }
+}
 
 export async function deliverReplies(params: {
   replies: ReplyPayload[];
@@ -322,6 +338,7 @@ export async function resolveMedia(
   stickerMetadata?: StickerMetadata;
 } | null> {
   const msg = ctx.message;
+  const mediaSsrfPolicy = resolveTelegramMediaSsrfPolicy(apiBaseUrl);
   const downloadAndSaveTelegramFile = async (filePath: string, fetchImpl: typeof fetch) => {
     const url = buildTelegramFileUrl({ token, filePath, apiBaseUrl });
     const fetched = await fetchRemoteMedia({
@@ -329,7 +346,7 @@ export async function resolveMedia(
       fetchImpl,
       filePathHint: filePath,
       maxBytes,
-      ssrfPolicy: TELEGRAM_MEDIA_SSRF_POLICY,
+      ssrfPolicy: mediaSsrfPolicy,
     });
     const originalName = fetched.fileName ?? filePath;
     return saveMediaBuffer(fetched.buffer, fetched.contentType, "inbound", maxBytes, originalName);
