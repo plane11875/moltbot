@@ -21,7 +21,6 @@ import type { DmPolicy } from "../config/types.base.js";
 import type { TelegramGroupConfig, TelegramTopicConfig } from "../config/types.js";
 import { danger, logVerbose, warn } from "../globals.js";
 import { enqueueSystemEvent } from "../infra/system-events.js";
-import { MediaFetchError } from "../media/fetch.js";
 import { readChannelAllowFromStore } from "../pairing/pairing-store.js";
 import { resolveAgentRoute } from "../routing/resolve-route.js";
 import { resolveThreadSessionKeys } from "../routing/session-key.js";
@@ -67,10 +66,6 @@ import { wasSentByBot } from "./sent-message-cache.js";
 function isMediaSizeLimitError(err: unknown): boolean {
   const errMsg = String(err);
   return errMsg.includes("exceeds") && errMsg.includes("MB limit");
-}
-
-function isRecoverableMediaGroupError(err: unknown): boolean {
-  return err instanceof MediaFetchError || isMediaSizeLimitError(err);
 }
 
 function hasInboundMedia(msg: Message): boolean {
@@ -1278,10 +1273,27 @@ export const registerTelegramHandlers = ({
         return;
       }
 
+      if (
+        shouldSkipGroupMessage({
+          isGroup: event.isGroup,
+          chatId: event.chatId,
+          chatTitle: event.msg.chat.title,
+          resolvedThreadId,
+          senderId: event.senderId,
+          senderUsername: event.senderUsername,
+          effectiveGroupAllow,
+          hasGroupAllowOverride,
+          groupConfig,
+          topicConfig,
+        })
+      ) {
+        return;
+      }
+
       let media: Awaited<ReturnType<typeof resolveMedia>> = null;
       try {
         media = await resolveMedia(
-          ctx,
+          event.ctx,
           mediaMaxBytes,
           opts.token,
           opts.proxyFetch,
@@ -1295,11 +1307,15 @@ export const registerTelegramHandlers = ({
             operation: "sendMessage",
             runtime,
             fn: () =>
-              bot.api.sendMessage(chatId, `⚠️ File too large. Maximum size is ${limitMb}MB.`, {
-                reply_to_message_id: msg.message_id,
-              }),
+              bot.api.sendMessage(
+                event.chatId,
+                `⚠️ File too large. Maximum size is ${limitMb}MB.`,
+                {
+                  reply_to_message_id: event.msg.message_id,
+                },
+              ),
           }).catch(() => {});
-          logger.warn({ chatId, error: errMsg }, "media exceeds size limit");
+          logger.warn({ chatId: event.chatId, error: errMsg }, "media exceeds size limit");
           return;
         }
         throw mediaErr;
@@ -1307,8 +1323,8 @@ export const registerTelegramHandlers = ({
 
       // Skip sticker-only messages where the sticker was skipped (animated/video)
       // These have no media and no text content to process.
-      const hasText = Boolean((msg.text ?? msg.caption ?? "").trim());
-      if (msg.sticker && !media && !hasText) {
+      const hasText = Boolean((event.msg.text ?? event.msg.caption ?? "").trim());
+      if (event.msg.sticker && !media && !hasText) {
         logVerbose("telegram: skipping sticker-only message (unsupported sticker type)");
         return;
       }

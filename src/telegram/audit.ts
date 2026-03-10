@@ -1,4 +1,6 @@
 import type { TelegramGroupConfig } from "../config/types.js";
+import { isRecord } from "../utils.js";
+import { fetchWithTimeout } from "../utils/fetch-timeout.js";
 import { buildTelegramBotApiBase } from "./api-base.js";
 import { makeProxyFetch } from "./proxy.js";
 
