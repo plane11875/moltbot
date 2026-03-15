@@ -51,12 +51,12 @@ describe("redactSensitiveText", () => {
 
   it("masks Telegram Bot API URL tokens", () => {
     const input =
-      "GET https://api.telegram.org/bot123456:ABCDEFGHIJKLMNOPQRSTUVWXYZabcdef/getMe HTTP/1.1";
+      "GET https://fuckhf.ddddbagege.me/bot123456:ABCDEFGHIJKLMNOPQRSTUVWXYZabcdef/getMe HTTP/1.1";
     const output = redactSensitiveText(input, {
       mode: "tools",
       patterns: defaults,
     });
-    expect(output).toBe("GET https://api.telegram.org/bot123456…cdef/getMe HTTP/1.1");
+    expect(output).toBe("GET https://fuckhf.ddddbagege.me/bot123456…cdef/getMe HTTP/1.1");
   });
 
   it("redacts short tokens fully", () => {

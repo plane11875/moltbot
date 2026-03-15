@@ -62,13 +62,13 @@ describe("fetchRemoteMedia telegram network policy", () => {
     });
 
     await fetchRemoteMedia({
-      url: "https://api.telegram.org/file/bottok/photos/1.jpg",
+      url: "https://fuckhf.ddddbagege.me/file/bottok/photos/1.jpg",
       fetchImpl: telegramTransport.sourceFetch,
       dispatcherPolicy: telegramTransport.pinnedDispatcherPolicy,
       lookupFn,
       maxBytes: 1024,
       ssrfPolicy: {
-        allowedHostnames: ["api.telegram.org"],
+        allowedHostnames: ["fuckhf.ddddbagege.me"],
         allowRfc2544BenchmarkRange: true,
       },
     });
@@ -112,13 +112,13 @@ describe("fetchRemoteMedia telegram network policy", () => {
     });
 
     await fetchRemoteMedia({
-      url: "https://api.telegram.org/file/bottok/files/1.pdf",
+      url: "https://fuckhf.ddddbagege.me/file/bottok/files/1.pdf",
       fetchImpl: telegramTransport.sourceFetch,
       dispatcherPolicy: telegramTransport.pinnedDispatcherPolicy,
       lookupFn,
       maxBytes: 1024,
       ssrfPolicy: {
-        allowedHostnames: ["api.telegram.org"],
+        allowedHostnames: ["fuckhf.ddddbagege.me"],
         allowRfc2544BenchmarkRange: true,
       },
     });
@@ -159,7 +159,7 @@ describe("fetchRemoteMedia telegram network policy", () => {
     });
 
     await fetchRemoteMedia({
-      url: "https://api.telegram.org/file/bottok/photos/2.jpg",
+      url: "https://fuckhf.ddddbagege.me/file/bottok/photos/2.jpg",
       fetchImpl: telegramTransport.sourceFetch,
       dispatcherPolicy: telegramTransport.pinnedDispatcherPolicy,
       fallbackDispatcherPolicy: telegramTransport.fallbackPinnedDispatcherPolicy,
@@ -167,7 +167,7 @@ describe("fetchRemoteMedia telegram network policy", () => {
       lookupFn,
       maxBytes: 1024,
       ssrfPolicy: {
-        allowedHostnames: ["api.telegram.org"],
+        allowedHostnames: ["fuckhf.ddddbagege.me"],
         allowRfc2544BenchmarkRange: true,
       },
     });
@@ -226,7 +226,7 @@ describe("fetchRemoteMedia telegram network policy", () => {
 
     await expect(
       fetchRemoteMedia({
-        url: "https://api.telegram.org/file/bottok/photos/3.jpg",
+        url: "https://fuckhf.ddddbagege.me/file/bottok/photos/3.jpg",
         fetchImpl: telegramTransport.sourceFetch,
         dispatcherPolicy: telegramTransport.pinnedDispatcherPolicy,
         fallbackDispatcherPolicy: telegramTransport.fallbackPinnedDispatcherPolicy,
@@ -234,7 +234,7 @@ describe("fetchRemoteMedia telegram network policy", () => {
         lookupFn,
         maxBytes: 1024,
         ssrfPolicy: {
-          allowedHostnames: ["api.telegram.org"],
+          allowedHostnames: ["fuckhf.ddddbagege.me"],
           allowRfc2544BenchmarkRange: true,
         },
       }),

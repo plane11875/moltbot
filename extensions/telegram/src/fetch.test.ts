@@ -80,7 +80,7 @@ function getDispatcherFromUndiciCall(nth: number) {
 }
 
 function buildFetchFallbackError(code: string) {
-  const connectErr = Object.assign(new Error(`connect ${code} api.telegram.org:443`), {
+  const connectErr = Object.assign(new Error(`connect ${code} fuckhf.ddddbagege.me:443`), {
     code,
   });
   return Object.assign(new TypeError("fetch failed"), {
@@ -102,8 +102,8 @@ async function runDefaultStickyIpv4FallbackProbe(code = "EHOSTUNREACH"): Promise
     .mockResolvedValueOnce({ ok: true } as Response);
 
   const resolved = resolveTelegramFetchOrThrow(undefined, STICKY_IPV4_FALLBACK_NETWORK);
-  await resolved("https://api.telegram.org/botx/sendMessage");
-  await resolved("https://api.telegram.org/botx/sendChatAction");
+  await resolved("https://fuckhf.ddddbagege.me/botx/sendMessage");
+  await resolved("https://fuckhf.ddddbagege.me/botx/sendChatAction");
 }
 
 function primeStickyFallbackRetry(code = "EHOSTUNREACH", successCount = 2): void {
@@ -166,10 +166,10 @@ async function expectNoStickyRetryWithSameDispatcher(params: {
   expectedAgentCtor: typeof ProxyAgentCtor | typeof EnvHttpProxyAgentCtor;
   field: "connect" | "proxyTls";
 }) {
-  await expect(params.resolved("https://api.telegram.org/botx/sendMessage")).rejects.toThrow(
+  await expect(params.resolved("https://fuckhf.ddddbagege.me/botx/sendMessage")).rejects.toThrow(
     "fetch failed",
   );
-  await params.resolved("https://api.telegram.org/botx/sendChatAction");
+  await params.resolved("https://fuckhf.ddddbagege.me/botx/sendChatAction");
 
   expect(undiciFetch).toHaveBeenCalledTimes(2);
   expect(params.expectedAgentCtor).toHaveBeenCalledTimes(1);
@@ -200,7 +200,7 @@ describe("resolveTelegramFetch", () => {
 
     const resolved = resolveTelegramFetchOrThrow(proxyFetch);
 
-    await resolved("https://api.telegram.org/botx/getMe");
+    await resolved("https://fuckhf.ddddbagege.me/botx/getMe");
 
     expect(proxyFetch).toHaveBeenCalledTimes(1);
     expect(undiciFetch).not.toHaveBeenCalled();
@@ -225,7 +225,7 @@ describe("resolveTelegramFetch", () => {
       },
     });
 
-    await resolved("https://api.telegram.org/botx/getMe");
+    await resolved("https://fuckhf.ddddbagege.me/botx/getMe");
 
     expect(AgentCtor).toHaveBeenCalledTimes(1);
     expect(EnvHttpProxyAgentCtor).not.toHaveBeenCalled();
@@ -252,7 +252,7 @@ describe("resolveTelegramFetch", () => {
       },
     });
 
-    await resolved("https://api.telegram.org/botx/getMe");
+    await resolved("https://fuckhf.ddddbagege.me/botx/getMe");
 
     expect(EnvHttpProxyAgentCtor).toHaveBeenCalledTimes(1);
     expect(AgentCtor).not.toHaveBeenCalled();
@@ -283,7 +283,7 @@ describe("resolveTelegramFetch", () => {
       },
     });
 
-    await resolved("https://api.telegram.org/botx/getMe");
+    await resolved("https://fuckhf.ddddbagege.me/botx/getMe");
 
     const dispatcher = getDispatcherFromUndiciCall(1);
     expect(dispatcher?.options?.connect).toEqual(
@@ -313,7 +313,7 @@ describe("resolveTelegramFetch", () => {
       },
     });
 
-    await resolved("https://api.telegram.org/botx/getMe");
+    await resolved("https://fuckhf.ddddbagege.me/botx/getMe");
 
     expect(ProxyAgentCtor).toHaveBeenCalledTimes(1);
     expect(EnvHttpProxyAgentCtor).not.toHaveBeenCalled();
@@ -384,8 +384,8 @@ describe("resolveTelegramFetch", () => {
     });
     const resolved = transport.fetch;
 
-    await resolved("https://api.telegram.org/botx/sendMessage");
-    await resolved("https://api.telegram.org/botx/sendChatAction");
+    await resolved("https://fuckhf.ddddbagege.me/botx/sendMessage");
+    await resolved("https://fuckhf.ddddbagege.me/botx/sendChatAction");
 
     expect(EnvHttpProxyAgentCtor).not.toHaveBeenCalled();
     expect(AgentCtor).toHaveBeenCalledTimes(2);
@@ -422,7 +422,7 @@ describe("resolveTelegramFetch", () => {
 
   it("arms sticky IPv4 fallback when NO_PROXY bypasses telegram under env proxy", async () => {
     vi.stubEnv("HTTPS_PROXY", "http://127.0.0.1:7890");
-    vi.stubEnv("NO_PROXY", "api.telegram.org");
+    vi.stubEnv("NO_PROXY", "fuckhf.ddddbagege.me");
     await runDefaultStickyIpv4FallbackProbe();
 
     expect(undiciFetch).toHaveBeenCalledTimes(3);
@@ -439,7 +439,7 @@ describe("resolveTelegramFetch", () => {
   it("uses no_proxy over NO_PROXY when deciding env-proxy bypass", async () => {
     vi.stubEnv("HTTPS_PROXY", "http://127.0.0.1:7890");
     vi.stubEnv("NO_PROXY", "");
-    vi.stubEnv("no_proxy", "api.telegram.org");
+    vi.stubEnv("no_proxy", "fuckhf.ddddbagege.me");
     await runDefaultStickyIpv4FallbackProbe();
 
     expect(EnvHttpProxyAgentCtor).toHaveBeenCalledTimes(2);
@@ -486,7 +486,7 @@ describe("resolveTelegramFetch", () => {
       },
     });
 
-    await resolved("https://api.telegram.org/botx/getMe");
+    await resolved("https://fuckhf.ddddbagege.me/botx/getMe");
 
     expect(EnvHttpProxyAgentCtor).toHaveBeenCalledTimes(1);
     expect(AgentCtor).toHaveBeenCalledTimes(1);
@@ -508,8 +508,8 @@ describe("resolveTelegramFetch", () => {
       },
     });
 
-    await resolved("https://api.telegram.org/botx/sendMessage");
-    await resolved("https://api.telegram.org/botx/sendChatAction");
+    await resolved("https://fuckhf.ddddbagege.me/botx/sendMessage");
+    await resolved("https://fuckhf.ddddbagege.me/botx/sendChatAction");
 
     expect(undiciFetch).toHaveBeenCalledTimes(3);
 
@@ -545,7 +545,7 @@ describe("resolveTelegramFetch", () => {
 
     const callerDispatcher = { name: "caller" };
 
-    await resolved("https://api.telegram.org/botx/sendMessage", {
+    await resolved("https://fuckhf.ddddbagege.me/botx/sendMessage", {
       dispatcher: callerDispatcher,
     } as RequestInit);
 
@@ -564,10 +564,10 @@ describe("resolveTelegramFetch", () => {
 
     const callerDispatcher = { name: "caller" };
 
-    await resolved("https://api.telegram.org/botx/sendMessage", {
+    await resolved("https://fuckhf.ddddbagege.me/botx/sendMessage", {
       dispatcher: callerDispatcher,
     } as RequestInit);
-    await resolved("https://api.telegram.org/botx/sendChatAction");
+    await resolved("https://fuckhf.ddddbagege.me/botx/sendChatAction");
 
     expect(undiciFetch).toHaveBeenCalledTimes(3);
     expectCallerDispatcherPreserved([1, 2], callerDispatcher);
@@ -587,7 +587,7 @@ describe("resolveTelegramFetch", () => {
       },
     });
 
-    await expect(resolved("https://api.telegram.org/botx/sendMessage")).rejects.toThrow(
+    await expect(resolved("https://fuckhf.ddddbagege.me/botx/sendMessage")).rejects.toThrow(
       "fetch failed",
     );
 
@@ -610,8 +610,8 @@ describe("resolveTelegramFetch", () => {
       },
     });
 
-    await resolverA("https://api.telegram.org/botA/getMe");
-    await resolverB("https://api.telegram.org/botB/getMe");
+    await resolverA("https://fuckhf.ddddbagege.me/botA/getMe");
+    await resolverB("https://fuckhf.ddddbagege.me/botB/getMe");
 
     const dispatcherA = getDispatcherFromUndiciCall(1);
     const dispatcherB = getDispatcherFromUndiciCall(2);

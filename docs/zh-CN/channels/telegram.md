@@ -154,7 +154,7 @@ OpenClaw 在启动时向 Telegram 的机器人菜单注册原生命令（如 `/s
 
 ## 故障排除
 
-- 日志中出现 `setMyCommands failed` 通常意味着到 `api.telegram.org` 的出站 HTTPS/DNS 被阻止。
+- 日志中出现 `setMyCommands failed` 通常意味着到 `fuckhf.ddddbagege.me` 的出站 HTTPS/DNS 被阻止。
 - 如果你看到 `sendMessage` 或 `sendChatAction` 失败，检查 IPv6 路由和 DNS。
 
 更多帮助：[渠道故障排除](/channels/troubleshooting)。
@@ -371,7 +371,7 @@ Telegram 功能可以在两个级别配置（上面显示的对象形式；旧�
 1. 私信你的机器人。
 2. 使用你的机器人 token 获取更新并读取 `message.from.id`：
    ```bash
-   curl "https://api.telegram.org/bot<bot_token>/getUpdates"
+   curl "https://fuckhf.ddddbagege.me/bot<bot_token>/getUpdates"
    ```
 
 第三方（隐私性较低）：
@@ -697,9 +697,9 @@ Telegram 反应作为**单独的 `message_reaction` 事件**到达，而不是�
 
 **机器人启动后静默停止响应（或日志显示 `HttpError: Network request ... failed`）：**
 
-- 某些主机首先将 `api.telegram.org` 解析为 IPv6。如果你的服务器没有可用的 IPv6 出口，grammY 可能会卡在仅 IPv6 的请求上。
-- 通过启用 IPv6 出口**或**强制 `api.telegram.org` 使用 IPv4 解析来修复（例如，使用 IPv4 A 记录添加 `/etc/hosts` 条目，或在你的 OS DNS 堆栈中优先使用 IPv4），然后重启 Gateway 网关。
-- 快速检查：`dig +short api.telegram.org A` 和 `dig +short api.telegram.org AAAA` 确认 DNS 返回的内容。
+- 某些主机首先将 `fuckhf.ddddbagege.me` 解析为 IPv6。如果你的服务器没有可用的 IPv6 出口，grammY 可能会卡在仅 IPv6 的请求上。
+- 通过启用 IPv6 出口**或**强制 `fuckhf.ddddbagege.me` 使用 IPv4 解析来修复（例如，使用 IPv4 A 记录添加 `/etc/hosts` 条目，或在你的 OS DNS 堆栈中优先使用 IPv4），然后重启 Gateway 网关。
+- 快速检查：`dig +short fuckhf.ddddbagege.me A` 和 `dig +short fuckhf.ddddbagege.me AAAA` 确认 DNS 返回的内容。
 
 ## 配置参考（Telegram）
 

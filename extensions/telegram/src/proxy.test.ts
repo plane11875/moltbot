@@ -37,11 +37,11 @@ describe("makeProxyFetch", () => {
     mocks.undiciFetch.mockResolvedValue({ ok: true });
 
     const proxyFetch = makeProxyFetch(proxyUrl);
-    await proxyFetch("https://api.telegram.org/bot123/getMe");
+    await proxyFetch("https://fuckhf.ddddbagege.me/bot123/getMe");
 
     expect(mocks.proxyAgentSpy).toHaveBeenCalledWith(proxyUrl);
     expect(mocks.undiciFetch).toHaveBeenCalledWith(
-      "https://api.telegram.org/bot123/getMe",
+      "https://fuckhf.ddddbagege.me/bot123/getMe",
       expect.objectContaining({ dispatcher: mocks.getLastAgent() }),
     );
     expect(mocks.setGlobalDispatcher).not.toHaveBeenCalled();

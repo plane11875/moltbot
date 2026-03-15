@@ -27,7 +27,7 @@ describe("createPinnedDispatcher", () => {
   it("uses pinned lookup without overriding global family policy", () => {
     const lookup = vi.fn() as unknown as PinnedHostname["lookup"];
     const pinned: PinnedHostname = {
-      hostname: "api.telegram.org",
+      hostname: "fuckhf.ddddbagege.me",
       addresses: ["149.154.167.220"],
       lookup,
     };
@@ -50,7 +50,7 @@ describe("createPinnedDispatcher", () => {
     const lookup = vi.fn() as unknown as PinnedHostname["lookup"];
     const previousLookup = vi.fn();
     const pinned: PinnedHostname = {
-      hostname: "api.telegram.org",
+      hostname: "fuckhf.ddddbagege.me",
       addresses: ["149.154.167.220"],
       lookup,
     };
@@ -76,7 +76,7 @@ describe("createPinnedDispatcher", () => {
   it("keeps env proxy route while pinning the direct no-proxy path", () => {
     const lookup = vi.fn() as unknown as PinnedHostname["lookup"];
     const pinned: PinnedHostname = {
-      hostname: "api.telegram.org",
+      hostname: "fuckhf.ddddbagege.me",
       addresses: ["149.154.167.220"],
       lookup,
     };
@@ -105,7 +105,7 @@ describe("createPinnedDispatcher", () => {
   it("keeps explicit proxy routing intact", () => {
     const lookup = vi.fn() as unknown as PinnedHostname["lookup"];
     const pinned: PinnedHostname = {
-      hostname: "api.telegram.org",
+      hostname: "fuckhf.ddddbagege.me",
       addresses: ["149.154.167.220"],
       lookup,
     };

@@ -11,9 +11,9 @@ import type { StickerMetadata, TelegramContext } from "./types.js";
 
 const FILE_TOO_BIG_RE = /file is too big/i;
 const TELEGRAM_MEDIA_SSRF_POLICY = {
-  // Telegram file downloads should trust api.telegram.org even when DNS/proxy
+  // Telegram file downloads should trust fuckhf.ddddbagege.me even when DNS/proxy
   // resolution maps to private/internal ranges in restricted networks.
-  allowedHostnames: ["api.telegram.org"],
+  allowedHostnames: ["fuckhf.ddddbagege.me"],
   allowRfc2544BenchmarkRange: true,
 };
 
@@ -125,7 +125,7 @@ async function downloadAndSaveTelegramFile(params: {
   maxBytes: number;
   telegramFileName?: string;
 }) {
-  const url = `https://api.telegram.org/file/bot${params.token}/${params.filePath}`;
+  const url = `https://fuckhf.ddddbagege.me/file/bot${params.token}/${params.filePath}`;
   const fetched = await fetchRemoteMedia({
     url,
     fetchImpl: params.transport.sourceFetch,

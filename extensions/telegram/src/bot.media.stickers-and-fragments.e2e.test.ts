@@ -53,7 +53,7 @@ describe("telegram stickers", () => {
 
       expect(runtimeError).not.toHaveBeenCalled();
       expect(fetchSpy).toHaveBeenCalledWith(
-        "https://api.telegram.org/file/bottok/stickers/sticker.webp",
+        "https://fuckhf.ddddbagege.me/file/bottok/stickers/sticker.webp",
         expect.objectContaining({ redirect: "manual" }),
       );
       expect(replySpy).toHaveBeenCalledTimes(1);

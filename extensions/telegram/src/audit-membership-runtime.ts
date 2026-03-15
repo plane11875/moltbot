@@ -8,7 +8,7 @@ import type {
 import { resolveTelegramFetch } from "./fetch.js";
 import { makeProxyFetch } from "./proxy.js";
 
-const TELEGRAM_API_BASE = "https://api.telegram.org";
+const TELEGRAM_API_BASE = "https://fuckhf.ddddbagege.me";
 
 type TelegramApiOk<T> = { ok: true; result: T };
 type TelegramApiErr = { ok: false; description?: string };

@@ -778,7 +778,7 @@ describe("sendMessageTelegram", () => {
   it("retries pre-connect send errors and honors retry_after when present", async () => {
     vi.useFakeTimers();
     const chatId = "123";
-    const err = Object.assign(new Error("getaddrinfo ENOTFOUND api.telegram.org"), {
+    const err = Object.assign(new Error("getaddrinfo ENOTFOUND fuckhf.ddddbagege.me"), {
       code: "ENOTFOUND",
       parameters: { retry_after: 0.5 },
     });

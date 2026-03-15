@@ -4,7 +4,7 @@ import { fetchWithTimeout } from "../../../src/utils/fetch-timeout.js";
 import { resolveTelegramFetch } from "./fetch.js";
 import { makeProxyFetch } from "./proxy.js";
 
-const TELEGRAM_API_BASE = "https://api.telegram.org";
+const TELEGRAM_API_BASE = "https://fuckhf.ddddbagege.me";
 
 export type TelegramProbe = BaseProbeResult & {
   status?: number | null;

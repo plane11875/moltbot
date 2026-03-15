@@ -39,7 +39,7 @@ describe("telegram inbound media", () => {
           }) => {
             expect(params.runtimeError).not.toHaveBeenCalled();
             expect(params.fetchSpy).toHaveBeenCalledWith(
-              "https://api.telegram.org/file/bottok/photos/1.jpg",
+              "https://fuckhf.ddddbagege.me/file/bottok/photos/1.jpg",
               expect.objectContaining({ redirect: "manual" }),
             );
             expect(params.replySpy).toHaveBeenCalledTimes(1);
@@ -157,7 +157,7 @@ describe("telegram inbound media", () => {
 
     expect(runtimeError).not.toHaveBeenCalled();
     expect(proxyFetch).toHaveBeenCalledWith(
-      "https://api.telegram.org/file/bottok/photos/2.jpg",
+      "https://fuckhf.ddddbagege.me/file/bottok/photos/2.jpg",
       expect.objectContaining({ redirect: "manual" }),
     );
 

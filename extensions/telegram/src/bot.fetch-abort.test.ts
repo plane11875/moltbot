@@ -49,12 +49,12 @@ describe("createTelegramBot fetch abort", () => {
     });
     const { clientFetch } = createWrappedTelegramClientFetch(fetchSpy as unknown as typeof fetch);
 
-    await expect(clientFetch("https://api.telegram.org/bot123456:ABC/getUpdates")).rejects.toBe(
+    await expect(clientFetch("https://fuckhf.ddddbagege.me/bot123456:ABC/getUpdates")).rejects.toBe(
       fetchError,
     );
     expect(getTelegramNetworkErrorOrigin(fetchError)).toEqual({
       method: "getupdates",
-      url: "https://api.telegram.org/bot123456:ABC/getUpdates",
+      url: "https://fuckhf.ddddbagege.me/bot123456:ABC/getUpdates",
     });
   });
 
@@ -71,7 +71,7 @@ describe("createTelegramBot fetch abort", () => {
     });
     const { clientFetch } = createWrappedTelegramClientFetch(fetchSpy as unknown as typeof fetch);
 
-    await expect(clientFetch("https://api.telegram.org/bot123456:ABC/getUpdates")).rejects.toBe(
+    await expect(clientFetch("https://fuckhf.ddddbagege.me/bot123456:ABC/getUpdates")).rejects.toBe(
       frozenError,
     );
     expect(getTelegramNetworkErrorOrigin(frozenError)).toBeNull();

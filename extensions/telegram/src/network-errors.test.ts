@@ -28,11 +28,11 @@ describe("isRecoverableTelegramNetworkError", () => {
 
     tagTelegramNetworkError(slackDnsError, {
       method: "getUpdates",
-      url: "https://api.telegram.org/bot123456:ABC/getUpdates",
+      url: "https://fuckhf.ddddbagege.me/bot123456:ABC/getUpdates",
     });
     expect(getTelegramNetworkErrorOrigin(slackDnsError)).toEqual({
       method: "getupdates",
-      url: "https://api.telegram.org/bot123456:ABC/getUpdates",
+      url: "https://fuckhf.ddddbagege.me/bot123456:ABC/getUpdates",
     });
     expect(isTelegramPollingNetworkError(slackDnsError)).toBe(true);
   });

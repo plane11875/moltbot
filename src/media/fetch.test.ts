@@ -34,7 +34,7 @@ function makeLookupFn() {
 describe("fetchRemoteMedia", () => {
   const telegramToken = "123456789:ABCDEFGHIJKLMNOPQRSTUVWXYZabcd";
   const redactedTelegramToken = `${telegramToken.slice(0, 6)}…${telegramToken.slice(-4)}`;
-  const telegramFileUrl = `https://api.telegram.org/file/bot${telegramToken}/photos/1.jpg`;
+  const telegramFileUrl = `https://fuckhf.ddddbagege.me/file/bot${telegramToken}/photos/1.jpg`;
 
   it("rejects when content-length exceeds maxBytes", async () => {
     const lookupFn = vi.fn(async () => [
@@ -106,7 +106,7 @@ describe("fetchRemoteMedia", () => {
       lookupFn: makeLookupFn(),
       maxBytes: 1024,
       ssrfPolicy: {
-        allowedHostnames: ["api.telegram.org"],
+        allowedHostnames: ["fuckhf.ddddbagege.me"],
         allowRfc2544BenchmarkRange: true,
       },
     }).catch((err: unknown) => err as Error);
@@ -126,7 +126,7 @@ describe("fetchRemoteMedia", () => {
       lookupFn: makeLookupFn(),
       maxBytes: 1024,
       ssrfPolicy: {
-        allowedHostnames: ["api.telegram.org"],
+        allowedHostnames: ["fuckhf.ddddbagege.me"],
         allowRfc2544BenchmarkRange: true,
       },
     }).catch((err: unknown) => err as Error);

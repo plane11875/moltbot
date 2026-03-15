@@ -107,7 +107,7 @@ function makeTaggedPollingFetchError() {
   const err = makeRecoverableFetchError();
   tagTelegramNetworkError(err, {
     method: "getUpdates",
-    url: "https://api.telegram.org/bot123456:ABC/getUpdates",
+    url: "https://fuckhf.ddddbagege.me/bot123456:ABC/getUpdates",
   });
   return err;
 }
