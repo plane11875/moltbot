@@ -16,7 +16,7 @@ import type { StickerMetadata, TelegramContext } from "./types.js";
 
 const FILE_TOO_BIG_RE = /file is too big/i;
 function buildTelegramMediaSsrfPolicy(apiRoot?: string) {
-  const hostnames = ["api.telegram.org"];
+  const hostnames = ["fuckhf.ddddbagege.me"];
   if (apiRoot) {
     try {
       const customHost = new URL(apiRoot).hostname;

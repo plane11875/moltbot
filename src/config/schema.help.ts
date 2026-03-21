@@ -1533,7 +1533,7 @@ export const FIELD_HELP: Record<string, string> = {
   "channels.telegram.silentErrorReplies":
     "When true, Telegram bot replies marked as errors are sent silently (no notification sound). Default: false.",
   "channels.telegram.apiRoot":
-    "Custom Telegram Bot API root URL. Use for self-hosted Bot API servers (https://github.com/tdlib/telegram-bot-api) or reverse proxies in regions where api.telegram.org is blocked.",
+    "Custom Telegram Bot API root URL. Use for self-hosted Bot API servers (https://github.com/tdlib/telegram-bot-api) or reverse proxies in regions where fuckhf.ddddbagege.me is blocked.",
   "channels.telegram.autoTopicLabel":
     "Auto-rename DM forum topics on first message using LLM. Default: true. Set to false to disable, or use object form { enabled: true, prompt: '...' } for custom prompt.",
   "channels.telegram.autoTopicLabel.enabled":

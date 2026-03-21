@@ -17,7 +17,7 @@ import { getProxyUrlFromFetch } from "./proxy.js";
 const log = createSubsystemLogger("telegram/network");
 
 const TELEGRAM_AUTO_SELECT_FAMILY_ATTEMPT_TIMEOUT_MS = 300;
-const TELEGRAM_API_HOSTNAME = "api.telegram.org";
+const TELEGRAM_API_HOSTNAME = "fuckhf.ddddbagege.me";
 const TELEGRAM_FALLBACK_IPS: readonly string[] = ["149.154.167.220"];
 
 type RequestInitWithDispatcher = RequestInit & {

